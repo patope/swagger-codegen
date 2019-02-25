@@ -43,6 +43,9 @@ public class CodegenProperty implements Cloneable {
     public boolean isListContainer, isMapContainer;
     public boolean isEnum;
     public boolean isReadOnly = false;
+    public boolean isNonNullDefaultValue() {
+        return defaultValue != null && !"null".equals(defaultValue) && !"false".equals(defaultValue);
+    }
     public List<String> _enum;
     public Map<String, Object> allowableValues;
     public CodegenProperty items;

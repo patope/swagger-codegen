@@ -202,6 +202,10 @@ public class JavaClientCodegen extends AbstractJavaCodegen
             apiDocTemplateFiles.remove("api_doc.mustache");
         }
 
+        if (immutableModel && !useOptionalType) {
+            supportingFiles.add(new SupportingFile("Nullable.mustache", sourceFolder + "/" + modelPackage().replace('.', '/'), "Nullable.java"));
+        }
+
         if (!("feign".equals(getLibrary()) || "resttemplate".equals(getLibrary()) || usesAnyRetrofitLibrary() || "google-api-client".equals(getLibrary()) || REST_ASSURED.equals(getLibrary()))) {
             supportingFiles.add(new SupportingFile("apiException.mustache", invokerFolder, "ApiException.java"));
             supportingFiles.add(new SupportingFile("Configuration.mustache", invokerFolder, "Configuration.java"));
@@ -454,10 +458,18 @@ public class JavaClientCodegen extends AbstractJavaCodegen
         super.postProcessModelProperty(model, property);
         if(!BooleanUtils.toBoolean(model.isEnum)) {
             //final String lib = getLibrary();
+            if(immutableModel && useOptionalType) {
+                model.imports.add("Optional");
+            }
             //Needed imports for Jackson based libraries
             if(additionalProperties.containsKey("jackson")) {
                 model.imports.add("JsonProperty");
                 model.imports.add("JsonValue");
+                if(additionalProperties.containsKey("immutableModel")) {
+                    model.imports.add("JsonSerialize");
+                    model.imports.add("JsonDeserialize");
+                    model.imports.add("JsonInclude");
+                }
             }
             if(additionalProperties.containsKey("gson")) {
                 model.imports.add("SerializedName");

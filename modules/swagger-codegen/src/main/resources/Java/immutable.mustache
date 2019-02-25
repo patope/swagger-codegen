@@ -1,0 +1,68 @@
+/**
+ * {{#description}}{{.}}{{/description}}{{^description}}{{classname}}{{/description}}
+ */{{#description}}
+@ApiModel(description = "{{{description}}}"){{/description}}
+{{>generatedAnnotation}}{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}
+@Value.Immutable
+@Value.Style(jdkOnly = true)
+{{#gson}}
+@Gson.TypeAdapters(emptyAsNulls = true)
+{{/gson}}
+{{#jackson}}
+@JsonSerialize(as = Immutable{{classname}}.class)
+@JsonDeserialize(as = Immutable{{classname}}.class)
+@JsonInclude(content = JsonInclude.Include.NON_NULL, value = JsonInclude.Include.NON_EMPTY)
+{{/jackson}}
+public interface {{classname}} {{#parent}}extends {{{parent}}}{{#serializableModel}}, Serializable {{/serializableModel}} {{/parent}}{{^parent}}{{#serializableModel}}extends Serializable {{/serializableModel}}{{/parent}}{
+  {{#vars}}
+
+   /**
+  {{#description}}
+   * {{description}}
+  {{/description}}
+  {{^description}}
+   * Get {{name}}
+  {{/description}}
+  {{#minimum}}
+   * minimum: {{minimum}}
+  {{/minimum}}
+  {{#maximum}}
+   * maximum: {{maximum}}
+  {{/maximum}}
+   * @return {{name}}
+  **/
+    {{#isEnum}}
+    {{^isContainer}}
+{{>modelInnerEnum}}
+    {{/isContainer}}
+    {{/isEnum}}
+    {{#items.isEnum}}
+      {{#items}}
+      {{^isContainer}}
+{{>modelInnerEnum}}
+      {{/isContainer}}
+      {{/items}}
+    {{/items.isEnum}}
+  {{#jackson}}
+  @JsonProperty("{{baseName}}")
+  {{/jackson}}
+{{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  @ApiModelProperty({{#example}}example = "{{{example}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
+{{#vendorExtensions.extraAnnotation}}
+  {{{vendorExtensions.extraAnnotation}}}
+{{/vendorExtensions.extraAnnotation}}
+  {{^required}}
+  {{^useOptionalType}}
+  @Nullable
+  {{/useOptionalType}}
+  {{/required}}
+  {{#gson}}
+  @SerializedName("{{baseName}}")
+  {{/gson}}
+  {{#nonNullDefaultValue}}@Value.Default
+  default {{/nonNullDefaultValue}}{{#required}}{{{datatypeWithEnum}}}{{/required}}{{^required}}{{#isContainer}}{{{datatypeWithEnum}}}{{/isContainer}}{{^isContainer}}{{^useOptionalType}}{{{datatypeWithEnum}}}{{/useOptionalType}}{{#useOptionalType}}Optional<{{{datatypeWithEnum}}}>{{/useOptionalType}}{{/isContainer}}{{/required}} {{#isBoolean}}is{{/isBoolean}}{{getter}}(){{^nonNullDefaultValue}};{{/nonNullDefaultValue}}{{#nonNullDefaultValue}} {
+    return {{#isContainer}}{{{defaultValue}}}{{/isContainer}}{{^useOptionalType}}{{{defaultValue}}}{{/useOptionalType}}{{#useOptionalType}}{{^isContainer}}Optional.of({{{defaultValue}}}){{/isContainer}}{{/useOptionalType}};
+  }
+  {{/nonNullDefaultValue}}
+
+  {{/vars}}
+}

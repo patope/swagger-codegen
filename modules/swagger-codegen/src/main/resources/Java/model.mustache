@@ -31,9 +31,15 @@ import android.os.Parcel;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 {{/useBeanValidation}}
+{{#immutableModel}}
+import org.immutables.value.Value;
+{{#gson}}
+import org.immutables.gson.Gson;
+{{/gson}}
+{{/immutableModel}}
 
 {{#models}}
 {{#model}}
-{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{>pojo}}{{/isEnum}}
+{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{^isEnum}}{{^immutableModel}}{{>pojo}}{{/immutableModel}}{{#immutableModel}}{{>immutable}}{{/immutableModel}}{{/isEnum}}
 {{/model}}
 {{/models}}

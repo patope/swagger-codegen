@@ -55,6 +55,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     public static final String WITH_XML = "withXml";
     public static final String SUPPORT_JAVA6 = "supportJava6";
     public static final String DISABLE_HTML_ESCAPING = "disableHtmlEscaping";
+    public static final String IMMUTABLE_MODEL = "immutableModel";
+    public static final String USE_OPTIONAL_TYPE = "useOptionalType";
 
     protected String dateLibrary = "threetenbp";
     protected boolean supportAsync = false;
@@ -88,6 +90,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
     protected String modelDocPath = "docs/";
     protected boolean supportJava6= false;
     protected boolean disableHtmlEscaping = false;
+    protected boolean immutableModel = false;
+    protected boolean useOptionalType = true;
 
     public AbstractJavaCodegen() {
         super();
@@ -161,6 +165,8 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         cliOptions.add(CliOption.newBoolean(FULL_JAVA_UTIL, "whether to use fully qualified name for classes under java.util. This option only works for Java API client"));
         cliOptions.add(new CliOption("hideGenerationTimestamp", "hides the timestamp when files were generated"));
         cliOptions.add(CliOption.newBoolean(WITH_XML, "whether to include support for application/xml content type and include XML annotations in the model (works with libraries that provide support for JSON and XML)"));
+        cliOptions.add(CliOption.newBoolean(IMMUTABLE_MODEL, "Generate immutable data model"));
+        cliOptions.add(CliOption.newBoolean(USE_OPTIONAL_TYPE, "Use java.util.Optional for optional properties in model (Requires Java8+)"));
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<String, String>();
@@ -330,6 +336,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
             this.setSerializeBigDecimalAsString(Boolean.valueOf(additionalProperties.get(CodegenConstants.SERIALIZE_BIG_DECIMAL_AS_STRING).toString()));
         }
 
+        if (additionalProperties.containsKey(IMMUTABLE_MODEL)) {
+            this.setImmutableModel(convertPropertyToBooleanAndWriteBack(IMMUTABLE_MODEL));
+        }
+
+        if (additionalProperties.containsKey(USE_OPTIONAL_TYPE)) {
+            this.setUseOptionalType(convertPropertyToBooleanAndWriteBack(USE_OPTIONAL_TYPE));
+        }
+
         // need to put back serializableModel (boolean) into additionalProperties as value in additionalProperties is string
         additionalProperties.put(CodegenConstants.SERIALIZABLE_MODEL, serializableModel);
 
@@ -383,6 +397,10 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
         importMapping.put("ApiModelProperty", "io.swagger.annotations.ApiModelProperty");
         importMapping.put("ApiModel", "io.swagger.annotations.ApiModel");
         importMapping.put("JsonProperty", "com.fasterxml.jackson.annotation.JsonProperty");
+        importMapping.put("JsonSerialize", "com.fasterxml.jackson.databind.annotation.JsonSerialize");
+        importMapping.put("JsonDeserialize", "com.fasterxml.jackson.databind.annotation.JsonDeserialize");
+        importMapping.put("JsonInclude", "com.fasterxml.jackson.annotation.JsonInclude");
+        importMapping.put("Optional", "java.util.Optional");
         importMapping.put("JsonSubTypes", "com.fasterxml.jackson.annotation.JsonSubTypes");
         importMapping.put("JsonTypeInfo", "com.fasterxml.jackson.annotation.JsonTypeInfo");
         importMapping.put("JsonCreator", "com.fasterxml.jackson.annotation.JsonCreator");
@@ -1260,6 +1278,14 @@ public abstract class AbstractJavaCodegen extends DefaultCodegen implements Code
 
     public void setDisableHtmlEscaping(boolean disabled) {
         this.disableHtmlEscaping = disabled;
+    }
+
+    public void setImmutableModel(boolean immutableModel) {
+        this.immutableModel = immutableModel;
+    }
+
+    public void setUseOptionalType(boolean useOptionalType) {
+        this.useOptionalType = useOptionalType;
     }
 
     public void setSupportAsync(boolean enabled) {
