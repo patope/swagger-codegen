@@ -116,6 +116,9 @@ ext {
     commons_io_version=2.5
     commons_lang3_version=3.5
     {{/supportJava6}}
+    {{#immutableModel}}
+    immutable_version = "2.7.5"
+    {{/immutableModel}}
     junit_version = "4.12"
 }
 
@@ -143,5 +146,11 @@ dependencies {
     compile "commons-io:commons-io:$commons_io_version"
     compile "org.apache.commons:commons-lang3:$commons_lang3_version"
     {{/supportJava6}}
+    {{#immutableModel}}
+    compileOnly "org.immutables:value:$immutable_version"
+    {{#gson}}
+    compileOnly "org.immutables:gson:$immutable_version"
+    {{/gson}}
+    {{/immutableModel}}
     testCompile "junit:junit:$junit_version"
 }

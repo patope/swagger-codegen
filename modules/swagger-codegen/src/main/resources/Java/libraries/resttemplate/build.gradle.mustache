@@ -114,6 +114,9 @@ ext {
     {{#threetenbp}}
     jackson_threeten_version = "2.6.4"
     {{/threetenbp}}
+    {{#immutableModel}}
+    immutable_version = "2.7.5"
+    {{/immutableModel}}
 }
 
 dependencies {
@@ -133,6 +136,12 @@ dependencies {
     {{#threetenbp}}
     compile "com.github.joschi.jackson:jackson-datatype-threetenbp:$jackson_threeten_version"
     {{/threetenbp}}
+    {{#immutableModel}}
+    compileOnly "org.immutables:value:$immutable_version"
+    {{#gson}}
+    compileOnly "org.immutables:gson:$immutable_version"
+    {{/gson}}
+    {{/immutableModel}}
     {{#withXml}}
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jackson_version"
     {{/withXml}}

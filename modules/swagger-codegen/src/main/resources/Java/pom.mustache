@@ -304,6 +304,22 @@
                 <scope>provided</scope>
             </dependency>
         {{/useBeanValidation}}
+        {{#immutableModel}}
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            {{#gson}}
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>gson</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            {{/gson}}
+        {{/immutableModel}}
         {{#parcelableModel}}
             <!-- Needed for Parcelable support-->
             <dependency>
@@ -332,5 +348,8 @@
         <jackson-version>{{^threetenbp}}2.7.5{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.12</junit-version>
+        {{#immutableModel}}
+        <immutable-version>2.7.5</immutable-version>
+        {{/immutableModel}}
     </properties>
 </project>

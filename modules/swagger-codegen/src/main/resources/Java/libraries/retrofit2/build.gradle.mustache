@@ -126,6 +126,9 @@ ext {
     {{#threetenbp}}
     threetenbp_version = "1.3.5"
     {{/threetenbp}}
+    {{#immutableModel}}
+    immutable_version = "2.7.5"
+    {{/immutableModel}}
     json_fire_version = "1.8.0"
 }
 
@@ -152,6 +155,12 @@ dependencies {
     {{#threetenbp}}
     compile "org.threeten:threetenbp:$threetenbp_version"
     {{/threetenbp}}
+    {{#immutableModel}}
+    compileOnly "org.immutables:value:$immutable_version"
+    {{#gson}}
+    compileOnly "org.immutables:gson:$immutable_version"
+    {{/gson}}
+    {{/immutableModel}}
     {{#usePlayWS}}
     compile "com.typesafe.play:play-java-ws_2.11:$play_version"
     compile "com.squareup.retrofit2:converter-jackson:$retrofit_version"

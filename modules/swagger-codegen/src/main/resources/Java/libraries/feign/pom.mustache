@@ -263,6 +263,20 @@
                 <version>${jackson-threetenbp-version}</version>
             </dependency>
         {{/threetenbp}}
+        {{#immutableModel}}
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>gson</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+        {{/immutableModel}}
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.client</artifactId>
@@ -301,6 +315,9 @@
         {{#threetenbp}}
             <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
         {{/threetenbp}}
+        {{#immutableModel}}
+        <immutable-version>2.7.5</immutable-version>
+        {{/immutableModel}}
         <junit-version>4.12</junit-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <oltu-version>1.0.1</oltu-version>

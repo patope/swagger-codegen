@@ -30,6 +30,9 @@ ext {
     jackson_version = "{{^threetenbp}}2.8.9{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}"
     vertx_version = "3.4.2"
     junit_version = "4.12"
+    {{#immutableModel}}
+    immutable_version = "2.7.5"
+    {{/immutableModel}}
 }
 
 dependencies {
@@ -48,6 +51,12 @@ dependencies {
     {{#threetenbp}}
     compile "com.github.joschi.jackson:jackson-datatype-threetenbp:$jackson_version"
     {{/threetenbp}}
+    {{#immutableModel}}
+    compileOnly "org.immutables:value:$immutable_version"
+    {{#gson}}
+    compileOnly "org.immutables:gson:$immutable_version"
+    {{/gson}}
+    {{/immutableModel}}
     testCompile "junit:junit:$junit_version"
     testCompile "io.vertx:vertx-unit:$vertx_version"
 }

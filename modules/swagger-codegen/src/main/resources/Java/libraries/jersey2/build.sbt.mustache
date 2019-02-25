@@ -25,6 +25,9 @@ lazy val root = (project in file(".")).
       {{#threetenbp}}
       "com.github.joschi.jackson" % "jackson-datatype-threetenbp" % "2.6.4" % "compile",
       {{/threetenbp}}
+      {{#withXml}}
+      "org.glassfish.jersey.media" % "jersey-media-jaxb" % "2.25.1" % "compile",
+      {{/withXml}}
       {{^java8}}
       "com.brsanthu" % "migbase64" % "2.2",
       {{/java8}}
@@ -32,6 +35,10 @@ lazy val root = (project in file(".")).
       "org.apache.commons" % "commons-lang3" % "3.6",
       "commons-io" % "commons-io" % "2.5",
       {{/supportJava6}}
+      {{#immutableModel}}
+      "org.immutables" % "value" % "2.7.5" % "provided",
+      "org.immutables" % "gson" % "2.7.5" % "provided",
+      {{/immutableModel}}
       "junit" % "junit" % "4.12" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test"
     )

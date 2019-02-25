@@ -223,6 +223,20 @@
             <version>${jodatime-version}</version>
         </dependency>
 
+        {{#immutableModel}}
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>gson</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+        {{/immutableModel}}
         {{#parcelableModel}}
             <!-- Needed for Parcelable support-->
             <dependency>
@@ -249,6 +263,9 @@
         <jodatime-version>2.9.9</jodatime-version>
         <oltu-version>1.0.1</oltu-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
+        {{#immutableModel}}
+        <immutable-version>2.7.5</immutable-version>
+        {{/immutableModel}}
         <junit-version>4.12</junit-version>
     </properties>
 </project>

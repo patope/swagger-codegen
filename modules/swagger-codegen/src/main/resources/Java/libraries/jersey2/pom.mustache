@@ -304,6 +304,20 @@
                 <scope>provided</scope>
             </dependency>
         {{/useBeanValidation}}
+        {{#immutableModel}}
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>gson</artifactId>
+                <version>${immutable-version}</version>
+                <scope>provided</scope>
+            </dependency>
+        {{/immutableModel}}
         <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -323,6 +337,9 @@
             <commons_io_version>2.5</commons_io_version>
             <commons_lang3_version>3.6</commons_lang3_version>
         {{/supportJava6}}
+        {{#immutableModel}}
+        <immutable-version>2.7.5</immutable-version>
+        {{/immutableModel}}
         <jackson-version>{{^threetenbp}}2.7.5{{/threetenbp}}{{#threetenbp}}2.6.4{{/threetenbp}}</jackson-version>
         <maven-plugin-version>1.0.0</maven-plugin-version>
         <junit-version>4.12</junit-version>

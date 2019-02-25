@@ -20,6 +20,10 @@ lazy val root = (project in file(".")).
       "com.fasterxml.jackson.datatype" % "jackson-datatype-{{^java8}}joda{{/java8}}{{#java8}}jsr310{{/java8}}" % "2.8.7" % "compile",
       "org.apache.oltu.oauth2" % "org.apache.oltu.oauth2.client" % "1.0.1" % "compile",
       "com.brsanthu" % "migbase64" % "2.2" % "compile",
+      {{#immutableModel}}
+      "org.immutables" % "value" % "2.7.5" % "provided",
+      "org.immutables" % "gson" % "2.7.5" % "provided",
+      {{/immutableModel}}
       "junit" % "junit" % "4.12" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test"
     )

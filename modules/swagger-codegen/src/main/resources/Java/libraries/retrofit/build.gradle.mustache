@@ -106,6 +106,9 @@ ext {
     swagger_annotations_version = "1.5.8"
     junit_version = "4.12"
     jodatime_version = "2.9.3"
+    {{#immutableModel}}
+    immutable_version = "2.7.5"
+    {{/immutableModel}}
 }
 
 dependencies {
@@ -114,5 +117,11 @@ dependencies {
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
     compile "joda-time:joda-time:$jodatime_version"
+    {{#immutableModel}}
+    compileOnly "org.immutables:value:$immutable_version"
+    {{#gson}}
+    compileOnly "org.immutables:gson:$immutable_version"
+    {{/gson}}
+    {{/immutableModel}}
     testCompile "junit:junit:$junit_version"
 }

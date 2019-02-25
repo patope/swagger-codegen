@@ -28,6 +28,10 @@ lazy val root = (project in file(".")).
       "org.apache.commons" % "commons-lang3" % "3.5",
       "commons-io" % "commons-io" % "2.5",
       {{/supportJava6}}
+      {{#immutableModel}}
+      "org.immutables" % "value" % "2.7.5" % "provided",
+      "org.immutables" % "gson" % "2.7.5" % "provided",
+      {{/immutableModel}}
       "junit" % "junit" % "4.12" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test"
     )

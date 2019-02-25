@@ -27,6 +27,10 @@ lazy val root = (project in file(".")).
       {{#threetenbp}}
       "com.github.joschi.jackson" % "jackson-datatype-threetenbp" % "2.6.4" % "compile",
       {{/threetenbp}}
+      {{#immutableModel}}
+      "org.immutables" % "value" % "2.7.5" % "provided",
+      "org.immutables" % "gson" % "2.7.5" % "provided",
+      {{/immutableModel}}
       "junit" % "junit" % "4.12" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test"
     )
